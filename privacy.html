@@ -140,6 +140,17 @@
 
         .section strong { color: #E2E8F0; }
 
+        /* Poseban naglasak za GDPR uloge */
+        .role-box {
+            background-color: rgba(255, 255, 255, 0.02);
+            border-left: 3px solid #0EA5E9;
+            padding: 16px;
+            margin-bottom: 16px;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .role-box strong { color: #0EA5E9; display: block; margin-bottom: 4px; }
+
         /* Liste unutar DPA sekcije */
         .dpa-box {
             background-color: rgba(255, 255, 255, 0.02);
@@ -262,12 +273,21 @@
         <div class="section">
             <div class="section-title">
                 <svg class="section-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 21h18"/><path d="M5 21V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16"/><path d="M9 21v-4a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v4"/></svg>
-                1. Strane u postupku
+                1. Uloge u obradi osobnih podataka
             </div>
-            <p><strong>Izvršitelj obrade (Processor):</strong> Fork obrt za usluge, OIB: 70868687941 (u daljnjem tekstu: "Pružatelj usluge").</p>
-            <p><strong>Voditelj obrade (Controller):</strong> Pravna osoba registrirana kao korisnik aplikacije (u daljnjem tekstu: "Korisnik").</p>
+            <p>S obzirom na prirodu naše B2B aplikacije (SaaS), prema Općoj uredbi o zaštiti podataka (GDPR), naše uloge su podijeljene u dvije kategorije:</p>
             
-            <p style="margin-top: 12px; padding: 12px; background-color: rgba(14, 165, 233, 0.05); border-radius: 8px; border: 1px solid rgba(14, 165, 233, 0.2);">
+            <div class="role-box">
+                <strong>A) Fork obrt kao VODITELJ OBRADE (Controller)</strong>
+                <p style="margin-bottom:0;">Kada prikupljamo vaše osobne podatke kao našeg Korisnika (npr. ime vlasnika/odgovorne osobe, kontakt e-mail, podaci za Stripe naplatu, podaci o blagajnicima), Fork obrt djeluje kao Voditelj obrade. Te podatke obrađujemo u svrhu sklapanja pretplatničkog ugovora, tehničke podrške i zakonske obveze vođenja računovodstva.</p>
+            </div>
+
+            <div class="role-box">
+                <strong>B) Fork obrt kao IZVRŠITELJ OBRADE (Processor)</strong>
+                <p style="margin-bottom:0;">Kada vi u aplikaciju unosite podatke <strong>vaših krajnjih kupaca</strong> (npr. izdavanje R1 računa s imenom, prezimenom i OIB-om vašeg kupca), <strong>vi ste Voditelj obrade</strong>, a mi smo vaš Izvršitelj obrade. Te podatke obrađujemo isključivo prema vašem nalogu radi generiranja i fiskalizacije računa.</p>
+            </div>
+            
+            <p style="margin-top: 24px; padding: 12px; background-color: rgba(14, 165, 233, 0.05); border-radius: 8px; border: 1px solid rgba(14, 165, 233, 0.2);">
                 <strong>Kontakt e-mail za upite o podacima i podršku:</strong><br>
                 <a href="mailto:info.djurdja@gmail.com" style="color: #0EA5E9; text-decoration: none; font-weight: 500;">info.djurdja@gmail.com</a>
             </p>
@@ -278,8 +298,8 @@
                 <svg class="section-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v18"/><path d="M3 10a4 4 0 0 0 8 0 4 4 0 0 0-8 0"/><path d="M13 10a4 4 0 0 0 8 0 4 4 0 0 0-8 0"/><path d="M3 7l9-4 9 4"/></svg>
                 2. Odgovornost za podatke krajnjih kupaca
             </div>
-            <p>Korisnik (tvrtka) unosi u aplikaciju podatke svojih kupaca koji mogu uključivati i privatne osobe (npr. ime, prezime, OIB na računu). <strong>Korisnik je isključivo odgovoran</strong> za pravnu osnovu prikupljanja tih podataka (npr. izvršenje ugovora, zakonska obveza fiskalizacije).</p>
-            <p>Pružatelj usluge te podatke obrađuje isključivo prema nalogu Korisnika, a u svrhu tehničkog generiranja, fiskalizacije i pohrane računa.</p>
+            <p>Sukladno točki 1.B, <strong>Korisnik je isključivo odgovoran</strong> za pravnu osnovu prikupljanja podataka svojih kupaca (npr. pristanak kupca, izvršenje ugovora, zakonska obveza fiskalizacije).</p>
+            <p>Pružatelj usluge (Fork obrt) strogo jamči da podatke vaših kupaca neće koristiti u vlastite marketinške svrhe, prodavati trećim stranama niti obrađivati izvan svrhe tehničkog održavanja sustava.</p>
         </div>
 
         <div class="section">
@@ -292,7 +312,7 @@
                 <ul>
                     <li><strong>Predmet obrade:</strong> Podaci potrebni za izdavanje i fiskalizaciju računa (OIB, Ime/Naziv kupca, stavke računa).</li>
                     <li><strong>Obveze Pružatelja usluge:</strong> Jamčimo da ćemo podatke obrađivati samo na dokumentirani nalog Korisnika (kroz korištenje aplikacije), osigurati tajnost podataka te primijeniti odgovarajuće tehničke mjere zaštite (enkripcija, backup).</li>
-                    <li><strong>Podizvršitelji (Sub-processors):</strong> Korisnik daje opću dozvolu za angažiranje podizvršitelja nužnih za rad sustava: Stripe (naplata), Porezna uprava (fiskalizacija), Cloud provideri (infrastruktura).</li>
+                    <li><strong>Podizvršitelji (Sub-processors):</strong> Korisnik daje opću dozvolu za angažiranje podizvršitelja nužnih za rad sustava: Stripe (naplata pretplate), Porezna uprava (fiskalizacija), Cloud provideri (infrastruktura).</li>
                     <li><strong>Pomoć Korisniku:</strong> Pružatelj usluge će, koliko je to moguće, tehnički pomoći Korisniku da odgovori na zahtjeve ispitanika (npr. brisanje ili izvoz podataka o kupcu).</li>
                 </ul>
             </div>
@@ -311,7 +331,7 @@
                 <svg class="section-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 2a10 10 0 0 0-10 10"/><path d="M12 2a14 14 0 0 0 0 20"/><path d="M12 2c2 0 5 3 5 10s-3 10-5 10"/></svg>
                 5. Kolačići i Prava
             </div>
-            <p>Koristimo samo tehničke kolačiće nužne za rad. Imate pravo zatražiti brisanje svog korisničkog računa i svih povezanih podataka u bilo kojem trenutku (uz poštivanje zakonskih rokova čuvanja fiskaliziranih računa).</p>
+            <p>Koristimo samo tehničke kolačiće nužne za rad. Imate pravo zatražiti brisanje svog korisničkog računa i svih povezanih podataka u bilo kojem trenutku (uz poštivanje zakonskih rokova čuvanja fiskaliziranih računa od strane Porezne uprave).</p>
         </div>
 
         <div class="divider"></div>
@@ -383,7 +403,7 @@
     </div>
 
     <footer class="modal-footer">
-        <a href="#" class="btn-primary" onclick="window.scrollTo({top: 0, behavior: 'smooth'}); return false;">
+        <a href="https://mojadjurdja.com" class="btn-primary">
             Razumijem i Prihvaćam
         </a>
     </footer>
