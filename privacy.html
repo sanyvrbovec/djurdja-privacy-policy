@@ -1,13 +1,388 @@
 <!DOCTYPE html>
 <html lang="hr">
 <head>
-  <meta charset="UTF-8">
-  <title>Pravila privatnosti</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pravila Privatnosti i Uvjeti Korištenja - Đurđa POS</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* --- RESET & OSNOVNE POSTAVKE --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: #07090E; /* Duboka tamna pozadina van kartice */
+            color: #9DA5B4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #2D333B; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #444C56; }
+
+        /* --- KARTICA (MODAL CONTAINER) --- */
+        .modal-container {
+            background-color: #12161F;
+            border: 1px solid #1F2430;
+            border-radius: 16px;
+            width: 100%;
+            max-width: 800px;
+            max-height: 90vh;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            overflow: hidden;
+        }
+
+        /* --- HEADER --- */
+        .modal-header {
+            padding: 24px 32px;
+            border-bottom: 1px solid #1F2430;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background-color: rgba(18, 22, 31, 0.95);
+        }
+
+        .header-content {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .icon-shield {
+            background-color: rgba(2, 132, 199, 0.1);
+            color: #0EA5E9;
+            padding: 12px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .title-wrapper h1 {
+            color: #F8FAFC;
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .title-wrapper p {
+            color: #0EA5E9;
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+        }
+
+        /* --- SCROLLABLE SADRŽAJ --- */
+        .modal-body {
+            padding: 32px;
+            overflow-y: auto;
+            flex: 1;
+        }
+
+        /* Upozorenje (B2B Box) */
+        .warning-box {
+            background-color: rgba(239, 68, 68, 0.05);
+            border: 1px solid rgba(239, 68, 68, 0.2);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 32px;
+        }
+
+        .warning-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #EF4444;
+            font-weight: 600;
+            margin-bottom: 10px;
+            font-size: 0.95rem;
+        }
+
+        .warning-box p {
+            color: #FCA5A5;
+            font-size: 0.9rem;
+        }
+
+        /* Sekcije */
+        .section { margin-bottom: 32px; }
+        
+        .section-title {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: #F8FAFC;
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 16px;
+        }
+
+        .section-icon { color: #64748B; }
+
+        .section p {
+            font-size: 0.95rem;
+            margin-bottom: 12px;
+            color: #94A3B8;
+        }
+
+        .section strong { color: #E2E8F0; }
+
+        /* Liste unutar DPA sekcije */
+        .dpa-box {
+            background-color: rgba(255, 255, 255, 0.02);
+            border: 1px solid #1F2430;
+            border-radius: 12px;
+            padding: 24px;
+            margin-top: 16px;
+        }
+
+        ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        ul li {
+            position: relative;
+            padding-left: 20px;
+            margin-bottom: 12px;
+            font-size: 0.95rem;
+            color: #94A3B8;
+        }
+
+        ul li::before {
+            content: "•";
+            color: #0EA5E9;
+            font-weight: bold;
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+
+        /* Pregrada za Uvjete poslovanja */
+        .divider {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, #1F2430, transparent);
+            margin: 48px 0;
+        }
+
+        .tos-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .tos-header h2 {
+            color: #F8FAFC;
+            font-size: 1.5rem;
+            margin-bottom: 8px;
+        }
+
+        .tos-header p {
+            color: #64748B;
+            font-size: 0.85rem;
+        }
+
+        /* --- FOOTER (GUMB) --- */
+        .modal-footer {
+            padding: 20px 32px;
+            border-top: 1px solid #1F2430;
+            background-color: rgba(18, 22, 31, 0.95);
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        .btn-primary {
+            background-color: #0284C7;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            text-decoration: none;
+        }
+
+        .btn-primary:hover { background-color: #0369A1; }
+
+        /* Responsive */
+        @media (max-width: 600px) {
+            .modal-header, .modal-body, .modal-footer { padding: 20px; }
+            body { padding: 10px; }
+            .modal-container { max-height: 95vh; }
+        }
+    </style>
 </head>
 <body>
-  <h1>Pravila privatnosti</h1>
-  <p>Ova aplikacija ne prikuplja osobne podatke korisnika.</p>
-  <p>Ako aplikacija prikuplja podatke, oni se koriste isključivo za funkcionalnost aplikacije i nisu dijeljeni trećim stranama.</p>
-  <p>Kontakt: tvoj@email.hr</p>
+
+<div class="modal-container">
+    <header class="modal-header">
+        <div class="header-content">
+            <div class="icon-shield">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                    <path d="M9 12l2 2 4-4"></path>
+                </svg>
+            </div>
+            <div class="title-wrapper">
+                <h1>Pravila Privatnosti i Uvjeti Korištenja</h1>
+                <p>Usklađeno s GDPR / AZOP</p>
+            </div>
+        </div>
+    </header>
+
+    <div class="modal-body">
+        
+        <div class="warning-box">
+            <div class="warning-header">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                    <circle cx="9" cy="7" r="4"></circle>
+                    <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                    <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                </svg>
+                Važna napomena: B2B Usluga
+            </div>
+            <p>Aplikacija "Đurđa" namijenjena je <strong>isključivo pravnim osobama</strong> (tvrtkama, obrtima, OPG-ovima). Korištenje aplikacije od strane privatnih osoba (potrošača) za osobne potrebe je strogo zabranjeno.</p>
+        </div>
+
+        <div class="section">
+            <div class="section-title">
+                <svg class="section-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 21h18"/><path d="M5 21V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16"/><path d="M9 21v-4a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v4"/></svg>
+                1. Strane u postupku
+            </div>
+            <p><strong>Izvršitelj obrade (Processor):</strong> Fork obrt za usluge, OIB: 70868687941 (u daljnjem tekstu: "Pružatelj usluge").</p>
+            <p><strong>Voditelj obrade (Controller):</strong> Pravna osoba registrirana kao korisnik aplikacije (u daljnjem tekstu: "Korisnik").</p>
+        </div>
+
+        <div class="section">
+            <div class="section-title">
+                <svg class="section-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v18"/><path d="M3 10a4 4 0 0 0 8 0 4 4 0 0 0-8 0"/><path d="M13 10a4 4 0 0 0 8 0 4 4 0 0 0-8 0"/><path d="M3 7l9-4 9 4"/></svg>
+                2. Odgovornost za podatke krajnjih kupaca
+            </div>
+            <p>Korisnik (tvrtka) unosi u aplikaciju podatke svojih kupaca koji mogu uključivati i privatne osobe (npr. ime, prezime, OIB na računu). <strong>Korisnik je isključivo odgovoran</strong> za pravnu osnovu prikupljanja tih podataka (npr. izvršenje ugovora, zakonska obveza fiskalizacije).</p>
+            <p>Pružatelj usluge te podatke obrađuje isključivo prema nalogu Korisnika, a u svrhu tehničkog generiranja, fiskalizacije i pohrane računa.</p>
+        </div>
+
+        <div class="section">
+            <div class="section-title">
+                <svg class="section-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 20V4a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/><rect x="2" y="6" width="20" height="14" rx="2"/></svg>
+                3. Ugovor o obradi podataka (DPA)
+            </div>
+            <p>Prihvaćanjem ovih uvjeta, Korisnik i Pružatelj usluge sklapaju <strong>Ugovor o obradi osobnih podataka</strong> sukladno članku 28. GDPR-a, kojim se utvrđuje:</p>
+            <div class="dpa-box">
+                <ul>
+                    <li><strong>Predmet obrade:</strong> Podaci potrebni za izdavanje i fiskalizaciju računa (OIB, Ime/Naziv kupca, stavke računa).</li>
+                    <li><strong>Obveze Pružatelja usluge:</strong> Jamčimo da ćemo podatke obrađivati samo na dokumentirani nalog Korisnika (kroz korištenje aplikacije), osigurati tajnost podataka te primijeniti odgovarajuće tehničke mjere zaštite (enkripcija, backup).</li>
+                    <li><strong>Podizvršitelji (Sub-processors):</strong> Korisnik daje opću dozvolu za angažiranje podizvršitelja nužnih za rad sustava: Stripe (naplata), Porezna uprava (fiskalizacija), Cloud provideri (infrastruktura).</li>
+                    <li><strong>Pomoć Korisniku:</strong> Pružatelj usluge će, koliko je to moguće, tehnički pomoći Korisniku da odgovori na zahtjeve ispitanika (npr. brisanje ili izvoz podataka o kupcu).</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-title">
+                <svg class="section-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                4. Sigurnost i pohrana
+            </div>
+            <p>Primjenjujemo stroge mjere zaštite: SSL/TLS enkripcija prometa, sigurnosni certifikati i ograničen pristup bazi podataka. Svi podaci se čuvaju na sigurnim serverima unutar Europske Unije ili zemalja s adekvatnom razinom zaštite.</p>
+        </div>
+
+        <div class="section">
+            <div class="section-title">
+                <svg class="section-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 2a10 10 0 0 0-10 10"/><path d="M12 2a14 14 0 0 0 0 20"/><path d="M12 2c2 0 5 3 5 10s-3 10-5 10"/></svg>
+                5. Kolačići i Prava
+            </div>
+            <p>Koristimo samo tehničke kolačiće nužne za rad. Imate pravo zatražiti brisanje svog korisničkog računa i svih povezanih podataka u bilo kojem trenutku (uz poštivanje zakonskih rokova čuvanja fiskaliziranih računa).</p>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="tos-header">
+            <h2>Opći Uvjeti Poslovanja</h2>
+            <p>Pravno obvezujući ugovor (B2B) • Posljednja izmjena: 15. 02. 2026. • Verzija: 1.0</p>
+        </div>
+
+        <div class="section">
+            <p>Ovi Opći uvjeti poslovanja predstavljaju pravno obvezujući ugovor između vas (Korisnik) i Fork obrta za usluge (Davatelj usluge). Korištenjem aplikacije "Đurđa", neopozivo pristajete na sve odredbe ovog ugovora.</p>
+        </div>
+
+        <div class="section">
+            <div class="section-title">I. Definicije i Opće odredbe</div>
+            <p><strong>1.1. Davatelj usluge:</strong> Fork obrt za usluge, vl. Mateja Ferenčak, OIB: 70868687941, sa sjedištem u Republici Hrvatskoj (u daljnjem tekstu: "Fork" ili "Mi").</p>
+            <p><strong>1.2. Aplikacija:</strong> Softversko rješenje u oblaku (SaaS) pod nazivom "Đurđa" namijenjeno fiskalizaciji računa i vođenju poslovanja.</p>
+            <p><strong>1.3. Korisnik:</strong> Pravna osoba ili registrirani obrtnik koji koristi Aplikaciju za svoje poslovne potrebe. <strong>Aplikacija nije namijenjena potrošačima</strong> (fizičkim osobama izvan poslovne djelatnosti).</p>
+            <p><strong>1.4. Ugovor:</strong> Ovaj dokument zajedno s Politikom privatnosti i odabranim pretplatničkim paketom čini cjelokupan ugovor između stranaka.</p>
+        </div>
+
+        <div class="section">
+            <div class="section-title">II. Licenca i Prava Korištenja</div>
+            <p><strong>2.1. Pravo korištenja:</strong> Fork dodjeljuje Korisniku ograničenu, neisključivu, neprenosivu i opozivu licencu za korištenje Aplikacije isključivo za interne poslovne potrebe Korisnika, tijekom trajanja aktivne pretplate.</p>
+            <p><strong>2.2. Ograničenja:</strong> Korisniku je strogo zabranjeno:</p>
+            <ul>
+                <li>Kopirati, modificirati, stvarati izvedenice, vršiti obrnuti inženjering (reverse engineering) ili dekompajlirati Aplikaciju.</li>
+                <li>Koristiti Aplikaciju za bilo kakve nezakonite radnje, uključujući poreznu utaju.</li>
+                <li>Pokušati zaobići sigurnosne mjere Aplikacije ili testirati ranjivost sustava bez izričitog pismenog odobrenja Fork-a.</li>
+                <li>Prodavati, iznajmljivati ili podlicencirati pristup Aplikaciji trećim stranama.</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <div class="section-title">III. Plaćanje i Pretplata</div>
+            <p><strong>3.1. Naplata:</strong> Usluga se naplaćuje prema važećem cjeniku putem sustava za procesiranje kartica (Stripe). Korisnik ovlašćuje Fork (putem Stripea) za automatsku naplatu pretplate (mjesečno/godišnje) dok se ista ne otkaže.</p>
+            <p><strong>3.2. B2B Odnos - Nema povrata:</strong> S obzirom da je Korisnik pravna osoba, isključena je primjena propisa o zaštiti potrošača. <strong>Povrat sredstava (refund) za već plaćena razdoblja nije moguć</strong>, osim ako je to izričito zakonski obvezno.</p>
+            <p><strong>3.3. Neplaćanje:</strong> U slučaju neuspjele naplate, Fork zadržava pravo trenutačnog suspendiranja pristupa Aplikaciji i svim podacima do podmirenja duga.</p>
+        </div>
+
+        <div class="section warning-box" style="margin-top: 40px; background-color: rgba(234, 179, 8, 0.05); border-color: rgba(234, 179, 8, 0.2);">
+            <div class="section-title" style="color: #EAB308; margin-bottom: 8px;">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                IV. Isključenje Odgovornosti (Disclaimer)
+            </div>
+            <p style="color: #FDE047;"><strong>4.1. "AS IS":</strong> Aplikacija se isporučuje u stanju "kakvo jest" i "kako je dostupno". Fork ne jamči da će Aplikacija raditi bez prekida, bez grešaka ili da će biti potpuno imuna na cyber napade.</p>
+            <p style="color: #FDE047; margin-top: 10px;"><strong>4.2. Fiskalna odgovornost:</strong> Korisnik je isključivo i u potpunosti odgovoran za ispravnost unesenih poreznih stopa, valjanost FINA certifikata, obvezu fiskalizacije u roku 48h pri padu interneta i cjelokupnu usklađenost poslovanja sa Zakonom. Fork pruža samo tehnički alat i ne odgovara za prekršaje Korisnika pred Poreznom upravom.</p>
+        </div>
+
+        <div class="section">
+            <div class="section-title">V. Ograničenje Odgovornosti</div>
+            <p><strong>5.1. Ograničenje štete:</strong> Do maksimalne mjere dopuštene zakonom, Fork neće biti odgovoran za bilo kakvu neizravnu, slučajnu, posebnu, posljedičnu ili kaznenu štetu, uključujući gubitak dobiti, podataka ili prekid poslovanja koji proizlazi iz korištenja Aplikacije.</p>
+            <p><strong>5.2. Maksimalni iznos:</strong> Ukupna odgovornost Fork-a prema Korisniku za bilo kakve zahtjeve ograničena je na iznos koji je Korisnik platio Fork-u u <strong>posljednja 3 (tri) mjeseca</strong> prije nastanka štetnog događaja.</p>
+        </div>
+
+        <div class="section">
+            <div class="section-title">VI. Održavanje i Viša Sila</div>
+            <p><strong>6.1. Održavanje:</strong> Fork zadržava pravo povremenog prekida rada radi održavanja. Nastojat ćemo takve prekide najaviti unaprijed.</p>
+            <p><strong>6.2. Treće strane:</strong> Aplikacija ovisi o infrastrukturi trećih strana (Hetzner, Cloudflare, Stripe, FINA). Fork ne odgovara za prekid rada uzrokovan njihovim greškama.</p>
+            <p><strong>6.3. Viša sila:</strong> Niti jedna strana nije odgovorna za neispunjenje obveza uzrokovano događajima izvan njene razumne kontrole (pad interneta, prirodne nepogode, promjene zakona).</p>
+        </div>
+
+        <div class="section">
+            <div class="section-title">VII. Rješavanje sporova</div>
+            <p>Na ovaj Ugovor primjenjuje se pravo Republike Hrvatske. Sve sporove stranke će pokušati riješiti mirnim putem. U slučaju nemogućnosti dogovora, ugovara se isključiva nadležnost stvarno nadležnog suda u Zagrebu.</p>
+            <p style="margin-top: 10px; font-style: italic; color: #64748B;">Fork obrt zadržava pravo izmjene ovih uvjeta u bilo kojem trenutku.</p>
+        </div>
+
+    </div>
+
+    <footer class="modal-footer">
+        <a href="#" class="btn-primary" onclick="window.scrollTo({top: 0, behavior: 'smooth'}); return false;">
+            Razumijem i Prihvaćam
+        </a>
+    </footer>
+</div>
+
 </body>
 </html>
